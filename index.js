@@ -11,10 +11,10 @@ const cors = require("cors");
 const morgan = require("morgan");
 const multer = require("multer");
 
-mongoose.connect(
-  "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7qsgn.mongodb.net/fullapp",
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 
