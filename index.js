@@ -19,7 +19,13 @@ mongoose.connect(process.env.MONGODB_URI, {
 const app = express();
 
 app.use(morgan("combined"));
-app.use(cors());
+const corsOptions = {
+  origin: "https://cars-client-eta.vercel.app",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/", carRoutes);
