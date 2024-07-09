@@ -2,15 +2,19 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
+const morgan = require("morgan");
+const multer = require("multer");
+const { GridFsStorage } = require("multer-gridfs-storage");
+const { GridFsBucket } = require("mongodb");
+
+// Rutas
 const carRoutes = require("./routes/carRoutes.js");
 const countriesRoute = require("./routes/countriesRoute.js");
 const departmentRoutes = require("./routes/departmentRoutes.js");
 const employeeRoutes = require("./routes/employeeRoutes.js");
 
-const cors = require("cors");
-const morgan = require("morgan");
-const multer = require("multer");
-
+// MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -28,7 +32,26 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use("/", carRoutes);
+let gfs;
+mongoose.connection.once("open", () => {
+  gfs = new GridFsBucket(mongoose.connection.db, {
+    bucketName: "uploads",
+  });
+});
+
+const storage = new GridFsStorage({
+  url: process.env.MONGODB_URI,
+  file: (req, file) => {
+    return {
+      filename: file.originalname,
+      bucketName: "uploads",
+    };
+  },
+});
+
+const upload = multer({ storage });
+
+app.use("/cars", carRoutes(upload));
 app.use("/", countriesRoute);
 app.use("/", departmentRoutes);
 app.use("/", employeeRoutes);
