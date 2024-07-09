@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 
 const app = express();
-//cars-client-eta.vercel.app/
+//cars-client-eta.vercel.app//
 https: app.use(morgan("combined"));
 const corsOptions = {
   origin: true,
