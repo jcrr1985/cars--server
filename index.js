@@ -16,7 +16,7 @@ const employeeRoutes = require("./routes/employeeRoutes.js");
 
 // MongoDB Connection
 mongoose.connect(
-  "mongodb+srv://jcrr1985:Tumama4$@cluster.mongodb.net/feedback?retryWrites=true&w=majority",
+  "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7aqsgn.mongodb.net/fullapp?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
