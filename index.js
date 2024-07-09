@@ -15,10 +15,13 @@ const departmentRoutes = require("./routes/departmentRoutes.js");
 const employeeRoutes = require("./routes/employeeRoutes.js");
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  "mongodb+srv://jcrr1985:Tumama4$@cluster.mongodb.net/feedback?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 const app = express();
 //cars-client-eta.vercel.app//
