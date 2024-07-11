@@ -15,13 +15,10 @@ const departmentRoutes = require("./routes/departmentRoutes.js");
 const employeeRoutes = require("./routes/employeeRoutes.js");
 
 // MongoDB Connection
-mongoose.connect(
-  "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7aqsgn.mongodb.net/fullapp?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 //cars-client-eta.vercel.app//
@@ -35,9 +32,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-let gfs;
 mongoose.connection.once("open", () => {
-  gfs = new GridFsBucket(mongoose.connection.db, {
+  new GridFsBucket(mongoose.connection.db, {
     bucketName: "uploads",
   });
 });
