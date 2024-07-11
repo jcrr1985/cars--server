@@ -22,14 +22,15 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 const app = express();
 //cars-client-eta.vercel.app//
-https: app.use(morgan("combined"));
-const corsOptions = {
-  origin: true,
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
-app.use(cors(corsOptions));
 app.use(express.json());
 
 mongoose.connection.once("open", () => {
